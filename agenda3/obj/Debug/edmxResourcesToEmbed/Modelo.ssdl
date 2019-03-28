@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Modelo.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ModeloStoreContainer">
+    <EntitySet Name="ModelFirstSet" EntityType="Modelo.Store.ModelFirstSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EventosSet" EntityType="Modelo.Store.EventosSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ModelFirstEventos" Association="Modelo.Store.ModelFirstEventos">
+      <End Role="ModelFirst" EntitySet="ModelFirstSet" />
+      <End Role="Eventos" EntitySet="EventosSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ModelFirstSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Telefono" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Direccion" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EventosSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Evento" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" Nullable="false" />
+    <Property Name="Lugar" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ModelFirstId" Type="int" Nullable="false" />
+    <Property Name="ModelFirstId1" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="ModelFirstEventos">
+    <End Role="ModelFirst" Type="Modelo.Store.ModelFirstSet" Multiplicity="1" />
+    <End Role="Eventos" Type="Modelo.Store.EventosSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ModelFirst">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Eventos">
+        <PropertyRef Name="ModelFirstId1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

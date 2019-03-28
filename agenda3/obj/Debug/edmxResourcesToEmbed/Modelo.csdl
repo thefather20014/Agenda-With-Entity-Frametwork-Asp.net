@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Modelo" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="ModeloContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ModelFirstSet" EntityType="Modelo.ModelFirst" />
+    <EntitySet Name="EventosSet" EntityType="Modelo.Eventos" />
+    <AssociationSet Name="ModelFirstEventos" Association="Modelo.ModelFirstEventos">
+      <End Role="ModelFirst" EntitySet="ModelFirstSet" />
+      <End Role="Eventos" EntitySet="EventosSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ModelFirst">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Telefono" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Direccion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Eventos" Relationship="Modelo.ModelFirstEventos" FromRole="ModelFirst" ToRole="Eventos" />
+  </EntityType>
+  <EntityType Name="Eventos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Evento" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Lugar" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ModelFirstId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Navegacion" Relationship="Modelo.ModelFirstEventos" FromRole="Eventos" ToRole="ModelFirst" />
+    <Property Name="ModelFirstId1" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="ModelFirstEventos">
+    <End Type="Modelo.ModelFirst" Role="ModelFirst" Multiplicity="1" />
+    <End Type="Modelo.Eventos" Role="Eventos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ModelFirst">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Eventos">
+        <PropertyRef Name="ModelFirstId1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
